@@ -12,9 +12,14 @@ type LinkButtonProps = {
   to: string;
   children: ReactNode;
 } & ComponentPropsWithoutRef<"button">;
+type ColoredLinkButton = {
+  el: "colored-link-button";
+  to: string;
+  children: ReactNode;
+} & ComponentPropsWithoutRef<"button">;
 
 export default function Button(
-  props: ButtonProps | LinkButtonProps | HeaderButtonProps,
+  props: ButtonProps | LinkButtonProps | HeaderButtonProps | ColoredLinkButton,
 ) {
   if (props.el === "link") {
     return (
@@ -25,18 +30,29 @@ export default function Button(
       </button>
     );
   }
+  if (props.el === "colored-link-button") {
+    return (
+      <button
+        {...props}
+        className="h-14 w-34 rounded-lg bg-custom-mid-blue p-4 font-semibold text-secondary"
+      >
+        <Link to={props.to}>{props.children}</Link>
+      </button>
+    );
+  }
+
   if (props.el === "header-button") {
     return (
       <button
         {...props}
-        className="w-34 bg-custom-mid-blue text-secondary hidden h-14 rounded-lg font-semibold lg:block"
+        className="hidden h-14 w-34 rounded-lg bg-custom-mid-blue font-semibold text-secondary lg:block"
       ></button>
     );
   }
   return (
     <button
       {...props}
-      className="w-34 bg-custom-mid-blue text-secondary h-14 rounded-lg font-semibold"
+      className="h-14 w-34 rounded-lg bg-custom-mid-blue font-semibold text-secondary"
     ></button>
   );
 }
