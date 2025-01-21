@@ -1,0 +1,34 @@
+{
+  "services": [
+    {
+      "imgsrc": "/assets/teeth.png",
+      "header": "Kök Kanal Tedavisi",
+      "description": "Kanal tedavisi (endodonti), dişin merkezinde oluşan enfeksiyonu tedavi etmek için kullanılan bir diş tedavisidir."
+    },
+    {
+      "imgsrc": "/assets/smile.png",
+      "header": "Estetik Diş Hekimi",
+      "description": "Kozmetik diş hekimliği, gülüşünüzün görünümünü iyileştirmeye odaklanan diş hekimliği dalıdır."
+    },
+    {
+      "imgsrc": "/assets/implant1.png",
+      "header": "Diş İmplantları",
+      "description": "Diş implantı, protez bir dişi veya köprüyü tutmak için çenenize yerleştirilen yapay bir diş köküdür."
+    },
+    {
+      "imgsrc": "/assets/tooth.png",
+      "header": "Diş Beyazlatma",
+      "description": "Gülümsemenizi evde aydınlatmak hiç bu kadar kolay olmamıştı. Deneyebileceğiniz her türlü ürün var."
+    },
+    {
+      "imgsrc": "/assets/dental.png",
+      "header": "Acil Diş Hekimliği",
+      "description": "Genel olarak, kanamayı durdurmak, şiddetli ağrıyı hafifletmek için acil tedavi gerektiren herhangi bir diş sorunu."
+    },
+    {
+      "imgsrc": "/assets/dental-care.png",
+      "header": "Önleme",
+      "description": "Koruyucu diş hekimliği, ağız sağlığının korunmasına yardımcı olan diş bakımıdır. Düzenli diş bakımının bir kombinasyonudur."
+    }
+  ]
+}

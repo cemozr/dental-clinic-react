@@ -4,14 +4,17 @@ import { Link } from "react-router-dom";
 type ButtonProps = {
   el: "button";
 } & ComponentPropsWithoutRef<"button">;
+
 type HeaderButtonProps = {
   el: "header-button";
 } & ComponentPropsWithoutRef<"button">;
+
 type LinkButtonProps = {
   el: "link";
   to: string;
   children: ReactNode;
 } & ComponentPropsWithoutRef<"button">;
+
 type ColoredLinkButton = {
   el: "colored-link-button";
   to: string;

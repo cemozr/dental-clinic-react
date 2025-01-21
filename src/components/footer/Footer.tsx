@@ -3,6 +3,7 @@ import { FaFacebook } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
+import Button from "../UI/Button";
 
 export default function Footer() {
   return (
@@ -22,13 +23,22 @@ export default function Footer() {
           Bizi Takip Edin
         </h3>
         <div className="flex gap-4 text-xl md:text-2xl">
-          <FaFacebook />
-          <AiFillInstagram />
-          <FaSquareXTwitter />
-          <FaLinkedin />
+          <Button el="link" to="/">
+            {" "}
+            <FaFacebook className="hover:animate-bounce hover:text-blue-700" />
+          </Button>
+          <Button el="link" to="/">
+            <AiFillInstagram className="hover:animate-bounce hover:text-purple-800" />
+          </Button>
+          <Button el="link" to="/">
+            <FaSquareXTwitter className="hover:animate-bounce hover:text-custom-dark-blue" />
+          </Button>
+          <Button el="link" to="/">
+            <FaLinkedin className="hover:animate-bounce hover:text-blue-500" />
+          </Button>
         </div>
       </section>
-      <section className="bg-custom-dark-blue text-secondary w-full text-center">
+      <section className="w-full bg-custom-dark-blue text-center text-secondary">
         <p>Tüm Hakları Saklıdır. 2025</p>
       </section>
     </footer>

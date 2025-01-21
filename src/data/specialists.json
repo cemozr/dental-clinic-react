@@ -1,0 +1,29 @@
+{
+  "specialists": [
+    {
+      "imgsrc": "/assets/image6.png",
+      "header": "Jim Carry",
+      "description": "Orthodontist"
+    },
+    {
+      "imgsrc": "/assets/image7.png",
+      "header": "Wade Warren",
+      "description": "Endodontist"
+    },
+    {
+      "imgsrc": "/assets/image8.png",
+      "header": "Jenny Wilson",
+      "description": "Periodontist"
+    },
+    {
+      "imgsrc": "/assets/image9.png",
+      "header": "Jacob Jones",
+      "description": "Orthodontist"
+    },
+    {
+      "imgsrc": "/assets/image10.png",
+      "header": "Jane Kane",
+      "description": "Orthodontist"
+    }
+  ]
+}

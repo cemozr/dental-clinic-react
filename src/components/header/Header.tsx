@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`${pathname === "/about" || pathname === "/contact" ? "bg-custom-light-blue lg:bg-secondary" : "bg-secondary lg:bg-custom-light-blue"} mx-4 mt-5 flex h-12 items-center justify-between rounded-md p-4 lg:mx-20 lg:h-24 lg:px-7`}
+        className={`${pathname === "/" ? "bg-secondary lg:bg-custom-light-blue" : "bg-custom-light-blue lg:bg-secondary"} mx-4 mt-5 flex h-12 items-center justify-between rounded-md p-4 lg:mx-20 lg:h-24 lg:px-7`}
       >
         <div className="flex gap-2">
           <FaTooth className="text-3xl" />

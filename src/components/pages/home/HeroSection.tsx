@@ -1,6 +1,6 @@
 import { FaPhoneVolume } from "react-icons/fa6";
 import Button from "../../UI/Button";
-import bannerImage from "../../../assets/image 11.png";
+import bannerImage from "/assets/image11.png";
 
 export default function HeroSection() {
   return (

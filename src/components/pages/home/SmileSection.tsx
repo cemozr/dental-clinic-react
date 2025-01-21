@@ -1,4 +1,4 @@
-import smileImage from "../../../assets/image 4.png";
+import smileImage from "/assets/image4.png";
 export default function SmileSection() {
   return (
     <section className="mt-4 flex flex-col bg-secondary md:flex-row lg:w-3/4">

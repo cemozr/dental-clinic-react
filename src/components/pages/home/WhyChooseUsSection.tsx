@@ -1,5 +1,5 @@
 import Button from "../../UI/Button";
-import dentistImage from "../../../assets/Rectangle 631.png";
+import dentistImage from "/assets/Rectangle631.png";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 
 export default function WhyChooseUsSection() {
