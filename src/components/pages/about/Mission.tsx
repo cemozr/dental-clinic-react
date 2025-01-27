@@ -2,7 +2,7 @@ import dentistImage from "/assets/Rectangle682.png";
 
 export default function Mission() {
   return (
-    <section className="flex flex-col gap-4 p-4 lg:mx-20">
+    <section className="flex flex-col gap-4 p-4">
       <h1 className="mb-4 text-center text-4xl font-bold">Hakkımızda</h1>
       <article className="grid lg:grid-cols-2 lg:gap-32">
         <div className="flex h-auto flex-col gap-4">
@@ -35,7 +35,7 @@ export default function Mission() {
             rahatsızlık ve daha hızlı iyileşme süreleri anlamına gelir.
           </p>
         </div>
-        <div className="md:aspect-w-2 md:aspect-h-1 mt-4">
+        <div className="mt-4 md:aspect-h-1 md:aspect-w-2">
           <img
             className="rounded-md object-cover"
             src={dentistImage}

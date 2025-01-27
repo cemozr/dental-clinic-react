@@ -27,7 +27,10 @@ export default function Button(
   if (props.el === "link") {
     return (
       <button {...props}>
-        <Link className="text-md font-semibold text-black" to={props.to}>
+        <Link
+          className="text-md font-semibold text-custom-dark-blue"
+          to={props.to}
+        >
           {props.children}
         </Link>
       </button>

@@ -12,13 +12,13 @@ export default function SpecialistCard({
   return (
     <div className="relative mx-2 flex flex-col">
       <img
-        className="h-auto max-h-44 w-full rounded-lg object-cover lg:max-h-64"
+        className="max-h-52 w-full rounded-lg object-cover md:max-h-56 lg:h-72"
         src={imgsrc}
         alt={header + "photo"}
       />
-      <article className="absolute bottom-2 left-2 rounded-md bg-gradient-to-r from-custom-sky-blue to-custom-light-blue p-2 px-4">
-        <h2 className="text-2xl font-bold">{header}</h2>
-        <p className="text-xl">{description}</p>
+      <article className="absolute bottom-2 left-2 rounded-md bg-gradient-to-r from-custom-sky-blue to-custom-light-blue px-4 py-1 lg:py-2">
+        <h2 className="text-xl font-bold lg:text-2xl">{header}</h2>
+        <p className="text-lg lg:text-xl">{description}</p>
       </article>
     </div>
   );

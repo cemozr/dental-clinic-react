@@ -2,7 +2,7 @@ import techImage from "/assets/Rectangle662_1.png";
 
 export default function Technology() {
   return (
-    <section className="mb-4 flex flex-col gap-4 p-4 lg:mx-20 lg:gap-10">
+    <section className="mb-4 flex flex-col gap-4 p-4 lg:gap-10">
       <article className="lg:flex lg:flex-col lg:items-center lg:gap-4">
         <h2 className="text-2xl font-bold">Son Teknoloji</h2>
         <p className="lg:w-1/2 lg:text-center">
@@ -12,7 +12,7 @@ export default function Technology() {
         </p>
       </article>
       <article className="grid lg:grid-cols-2 lg:gap-20">
-        <div className="md:aspect-w-4 md:aspect-h-1 mb-4">
+        <div className="mb-4 md:aspect-h-1 md:aspect-w-4">
           <img
             className="rounded-md object-cover"
             src={techImage}
