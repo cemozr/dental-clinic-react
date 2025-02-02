@@ -12,7 +12,7 @@ export default function Technology() {
         </p>
       </article>
       <article className="grid lg:grid-cols-2 lg:gap-20">
-        <div className="mb-4 md:aspect-h-1 md:aspect-w-4">
+        <div className="md:aspect-h-1 md:aspect-w-4">
           <img
             className="rounded-md object-cover"
             src={techImage}

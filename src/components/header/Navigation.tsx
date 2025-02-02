@@ -18,6 +18,11 @@ export default function Navigation() {
           </li>
         );
       })}
+      <li>
+        <Button el="colored-link" to="/appointment">
+          Randevu Al
+        </Button>
+      </li>
     </>
   );
 }

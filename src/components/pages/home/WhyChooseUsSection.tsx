@@ -33,7 +33,7 @@ export default function WhyChooseUsSection() {
           </li>
         </ul>
         <div className="my-4 flex justify-start">
-          <Button el="colored-link-button" to="/">
+          <Button el="colored-link-button" to="/appointment">
             Randevu Al
           </Button>
         </div>

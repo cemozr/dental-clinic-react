@@ -15,7 +15,7 @@ export default function HeroSection() {
           kendinizi ayırtın.
         </p>
         <div className="flex gap-4">
-          <Button el="colored-link-button" to="/">
+          <Button el="colored-link-button" to="/appointment">
             Randevu Al
           </Button>
           <div className="flex items-center gap-4">
