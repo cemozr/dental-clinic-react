@@ -1,53 +1,79 @@
-export default function MedicalInfo() {
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { type AppointmentForm } from "./AppointmentPage";
+type MedicalInfoProps = {
+  register: UseFormRegister<any>;
+  errors: FieldErrors<AppointmentForm>;
+};
+
+export default function MedicalInfo({ register, errors }: MedicalInfoProps) {
   return (
     <fieldset className="flex flex-col gap-2">
-      <label htmlFor="extra-info" className="font-semibold">
+      <label htmlFor="allergies" className="font-semibold">
         Alerjiler
       </label>
       <textarea
-        id="extra-info"
-        name="extra-info"
+        id="allergies"
         rows={3}
         className="rounded-md p-3"
         placeholder="Lateks, çeşitli metaller, lokal anestezi alerjileri vb. "
+        {...register("allergies")}
       />
-      <label htmlFor="extra-info" className="font-semibold">
+      {errors.allergies && (
+        <p className="text-error">{errors.allergies.message}</p>
+      )}
+      <label htmlFor="medicines" className="font-semibold">
         Kullanılan İlaçlar ve Tedaviler
       </label>
       <textarea
-        id="extra-info"
-        name="extra-info"
+        id="medicines"
         rows={3}
         className="rounded-md p-3"
         placeholder="Antibiyotik, ağrı kesici vb. "
+        {...register("medicines")}
       />
-      <label htmlFor="extra-info" className="font-semibold">
+      {errors.medicines && (
+        <p className="text-error">{errors.medicines.message}</p>
+      )}
+      <label htmlFor="medical-history" className="font-semibold">
         Tıbbi Geçmiş
       </label>
       <textarea
-        id="extra-info"
-        name="extra-info"
+        id="medical-history"
         rows={3}
         className="rounded-md p-3"
         placeholder="Diyabet, hipertansiyon (yüksek tansiyon), kalp hastalıkları..."
+        {...register("medicalHistory")}
       />
-      <label htmlFor="extra-info" className="font-semibold">
+      {errors.medicalHistory && (
+        <p className="text-error">{errors.medicalHistory.message}</p>
+      )}
+      <label htmlFor="family-medical-history" className="font-semibold">
         Aile Tıbbi Geçmişi
       </label>
       <textarea
-        id="extra-info"
-        name="extra-info"
+        id="family-medical-history"
         rows={3}
         className="rounded-md p-3"
         placeholder="Genetik rahatsızlıklar, diş eti hastalıkları, çürükler veya çene problemleri vb."
+        {...register("familyMedicalHistory")}
       />
+      {errors.familyMedicalHistory && (
+        <p className="text-error">{errors.familyMedicalHistory.message}</p>
+      )}
       <div className="flex gap-2">
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          id="privacy-check"
+          {...register("privacyCheck")}
+        />
         <p>
           Kişisel bilgilerimi ve sağlık bilgilerimi tarafınızla paylaşmayı ve
           bilgilerimin tarafınızca saklanmasını onaylıyorum
         </p>
       </div>
+      {errors.privacyCheck && (
+        <p className="text-error">{errors.privacyCheck.message}</p>
+      )}
     </fieldset>
   );
 }
