@@ -18,7 +18,7 @@ export default function Navigation() {
           </li>
         );
       })}
-      <li>
+      <li className="lg:hidden">
         <Button el="colored-link" to="/appointment">
           Randevu Al
         </Button>

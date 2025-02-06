@@ -50,7 +50,11 @@ export default function Header() {
             <Navigation />
           </ul>
         </nav>
-        <Button el="header-button">Randevu Al</Button>
+        <div className="hidden lg:flex">
+          <Button el="colored-link-button" to="/appointment">
+            Randevu Al
+          </Button>
+        </div>
       </header>
       {isOpen && (
         <nav

@@ -1,9 +1,9 @@
-import specialists from "../../../data/specialists.json";
+import specialists from "../../../../../data/specialists.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import { tr } from "date-fns/locale/tr";
-import Button from "../../UI/Button";
+import Button from "../../../../UI/Button";
 import { IoMdArrowDropdown } from "react-icons/io";
 import {
   Controller,
@@ -12,7 +12,8 @@ import {
   UseFormSetValue,
   FieldErrors,
 } from "react-hook-form";
-import { type AppointmentForm } from "./AppointmentPage";
+import { type AppointmentForm } from "../AppointmentForm";
+import { useState } from "react";
 
 type AppointmentInfoProps = {
   register: UseFormRegister<AppointmentForm>;
@@ -49,13 +50,18 @@ export default function AppointmentInfo({
     "17:00",
     "17:30",
   ];
-
-  const handleTimeSelect = (time: string) => {
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const handleTimeSelect = (
+    time: string,
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault();
     setValue("appointmentTime", time);
+    setSelectedTime(time);
   };
 
   return (
-    <fieldset className="flex flex-col gap-2">
+    <fieldset className="flex flex-col gap-4">
       <label htmlFor="specialist" className="font-semibold">
         Hekim Seçiniz
       </label>
@@ -91,6 +97,7 @@ export default function AppointmentInfo({
             className="h-12 w-full rounded-md pl-3"
             id="appointment-date"
             minDate={new Date()}
+            placeholderText="gg/aa/yyyy"
             locale="tr"
             selected={field.value}
             onChange={(date) => field.onChange(date)}
@@ -101,11 +108,16 @@ export default function AppointmentInfo({
         <p className="text-error">{errors.appointmentDate?.message}</p>
       )}
       <p className="font-semibold">Müsait Saatler</p>
-      <ul className="grid grid-cols-5 gap-2">
+      <ul className="grid grid-cols-5 gap-4 md:grid-cols-10 lg:grid-cols-6 xl:grid-cols-10">
         {workingHours.map((hour) => {
           return (
             <li key={hour}>
-              <Button el="time-button" onClick={() => handleTimeSelect(hour)}>
+              <Button
+                el="time-button"
+                onClick={(e) => handleTimeSelect(hour, e)}
+                className="bg-black"
+                isSelected={selectedTime === hour}
+              >
                 {hour}
               </Button>
             </li>

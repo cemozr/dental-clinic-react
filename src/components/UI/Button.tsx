@@ -11,6 +11,7 @@ type WideButtonProps = {
 
 type TimeButton = {
   el: "time-button";
+  isSelected: boolean;
 } & ComponentPropsWithoutRef<"button">;
 
 type HeaderButtonProps = {
@@ -48,34 +49,27 @@ export default function Button(
   switch (props.el) {
     case "link":
       return (
-        <button {...props}>
-          <Link
-            className="text-md font-semibold text-custom-dark-blue"
-            to={props.to}
-          >
-            {props.children}
-          </Link>
-        </button>
+        <Link
+          className="text-md font-semibold text-custom-dark-blue"
+          to={props.to}
+        >
+          {props.children}
+        </Link>
       );
     case "colored-link":
       return (
-        <button {...props}>
-          <Link
-            className="text-md font-bold text-custom-mid-blue"
-            to={props.to}
-          >
-            {props.children}
-          </Link>
-        </button>
+        <Link className="text-md font-bold text-custom-mid-blue" to={props.to}>
+          {props.children}
+        </Link>
       );
     case "colored-link-button":
       return (
-        <button
-          {...props}
-          className="h-14 w-34 rounded-lg bg-custom-mid-blue p-4 font-semibold text-secondary"
+        <Link
+          className="h-14 w-34 rounded-lg bg-custom-mid-blue p-4 text-center font-semibold text-secondary xl:w-40"
+          to={props.to}
         >
-          <Link to={props.to}>{props.children}</Link>
-        </button>
+          {props.children}
+        </Link>
       );
     case "header-button":
       return (
@@ -92,10 +86,11 @@ export default function Button(
         ></button>
       );
     case "time-button":
+      const { isSelected, ...rest } = props;
       return (
         <button
-          {...props}
-          className="h-8 w-14 rounded-full bg-custom-mid-blue font-semibold text-secondary"
+          {...rest}
+          className={`${props.isSelected ? "bg-secondary text-custom-mid-blue" : "bg-custom-mid-blue text-secondary"} h-8 w-14 rounded-full font-semibold`}
         ></button>
       );
     default:

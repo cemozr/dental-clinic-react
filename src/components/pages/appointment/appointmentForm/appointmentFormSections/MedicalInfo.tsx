@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { type AppointmentForm } from "./AppointmentPage";
+import { type AppointmentForm } from "../AppointmentForm";
 type MedicalInfoProps = {
   register: UseFormRegister<any>;
   errors: FieldErrors<AppointmentForm>;
@@ -7,7 +7,7 @@ type MedicalInfoProps = {
 
 export default function MedicalInfo({ register, errors }: MedicalInfoProps) {
   return (
-    <fieldset className="flex flex-col gap-2">
+    <fieldset className="flex flex-col gap-4">
       <label htmlFor="allergies" className="font-semibold">
         Alerjiler
       </label>

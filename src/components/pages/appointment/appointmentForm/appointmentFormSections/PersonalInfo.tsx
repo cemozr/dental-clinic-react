@@ -12,7 +12,7 @@ import {
   UseFormRegister,
   FieldErrors,
 } from "react-hook-form";
-import { type AppointmentForm } from "./AppointmentPage";
+import { type AppointmentForm } from "../AppointmentForm";
 
 type PersonalInfoProps = {
   control: Control<any>;
@@ -99,6 +99,7 @@ export default function PersonalInfo({
             className="h-12 w-full rounded-md pl-3"
             id="birth-date"
             locale="tr"
+            placeholderText="gg/aa/yyyy"
             minDate={new Date()}
             selected={field.value}
             onChange={(date) => field.onChange(date)}
