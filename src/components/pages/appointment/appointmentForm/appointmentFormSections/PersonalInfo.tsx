@@ -28,7 +28,7 @@ export default function PersonalInfo({
   registerLocale("tr", tr);
 
   return (
-    <fieldset className="flex flex-col gap-2">
+    <fieldset id="personal-info-section" className="flex flex-col gap-2">
       <label htmlFor="id-number" className="font-semibold">
         T.C. Kimlik Numarası
       </label>
@@ -100,7 +100,7 @@ export default function PersonalInfo({
             id="birth-date"
             locale="tr"
             placeholderText="gg/aa/yyyy"
-            minDate={new Date()}
+            maxDate={new Date()}
             selected={field.value}
             onChange={(date) => field.onChange(date)}
           />

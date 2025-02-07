@@ -17,8 +17,59 @@ body {
 @keyframes translate {
   0% {
     transform: translateY(-100%);
+    display: none;
+    opacity: 0;
   }
+
   100% {
     transform: translateY((0%));
+    display: block;
+    opacity: 1;
+  }
+}
+p {
+  font-size: large;
+}
+#appointment-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#personal-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#medical-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#appointment-image {
+  animation: opacityTranslate 1.5s ease-out;
+}
+
+@keyframes horizontalTranslate {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes opacityTranslate {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
   }
 }

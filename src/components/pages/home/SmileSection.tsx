@@ -13,7 +13,7 @@ export default function SmileSection() {
           kendinizi ayırtın.
         </p>
       </article>
-      <div className="order-2 flex p-4">
+      <div className="order-2 flex px-4">
         <img src={smileImage} alt="smile" className="my-2 rounded-lg" />
       </div>
     </section>

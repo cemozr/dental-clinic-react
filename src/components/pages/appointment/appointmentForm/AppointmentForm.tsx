@@ -6,6 +6,13 @@ import { AppointmentFormSchema } from "./AppointmentFormSchema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../UI/Button";
+import { useDispatch } from "react-redux";
+import {
+  createAppointment,
+  type Appointment,
+} from "../../../../states/appointmentSlice";
+import { AppDispatch } from "../../../../states/store";
+import { toast, Zoom } from "react-toastify";
 
 export type AppointmentForm = z.infer<typeof AppointmentFormSchema>;
 
@@ -18,6 +25,8 @@ export default function AppointmentForm({
   index,
   currentSection,
 }: AppointmentFormProps) {
+  const dispatch: AppDispatch = useDispatch();
+
   const {
     register,
     control,
@@ -30,7 +39,57 @@ export default function AppointmentForm({
 
   const onSubmit: SubmitHandler<AppointmentForm> = (data) => {
     console.log(data);
+    const formattedAppointmentDate: string = data
+      .appointmentDate!.toISOString()
+      .split("T")[0];
+    const formattedBirthDate: string = data
+      .birthDate!.toISOString()
+      .split("T")[0];
+
+    const fixedData: Appointment = {
+      appointmentDate: formattedAppointmentDate,
+      appointmentTime: data.appointmentTime,
+      birthDate: formattedBirthDate,
+      dentist: data.specialist,
+      extraInfo: data.extraInfo,
+      familyMedicalHistory: data.familyMedicalHistory,
+      gender: data.gender,
+      idNumber: data.idNumber,
+      mail: data.mail,
+      medicalHistory: data.medicalHistory,
+      medicalIssue: data.medicalIssue,
+      medicines: data.medicines,
+      name: data.name,
+      tel: data.tel,
+    };
+    try {
+      dispatch(createAppointment(fixedData));
+      toast.success("Randevunuz başarıyla oluşturuldu.", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+      });
+    } catch {
+      toast.error("Randevunuz oluşturulamadı.", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+      });
+    }
   };
+
   return (
     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
       {currentSection === "Randevu Bilgileri" ? (

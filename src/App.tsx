@@ -7,7 +7,7 @@ import ContactPage from "./components/pages/contact/ContactPage";
 import AboutPage from "./components/pages/about/AboutPage";
 import ServicesPage from "./components/pages/services/ServicesPage";
 import AppointmentPage from "./components/pages/appointment/AppointmentPage";
-
+import { ToastContainer, Zoom } from "react-toastify";
 function App() {
   const location = useLocation();
   const { pathname } = location;
@@ -15,6 +15,19 @@ function App() {
     <div
       className={`flex min-h-screen w-full flex-col ${pathname === "/" ? "bg-secondary" : "bg-custom-light-blue"}`}
     >
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+      />
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

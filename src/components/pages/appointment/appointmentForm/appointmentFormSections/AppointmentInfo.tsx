@@ -61,7 +61,7 @@ export default function AppointmentInfo({
   };
 
   return (
-    <fieldset className="flex flex-col gap-4">
+    <fieldset id="appointment-info-section" className="flex flex-col gap-4">
       <label htmlFor="specialist" className="font-semibold">
         Hekim Seçiniz
       </label>

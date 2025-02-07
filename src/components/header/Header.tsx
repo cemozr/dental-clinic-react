@@ -30,8 +30,10 @@ export default function Header() {
       <header
         className={`${pathname === "/" ? "bg-secondary lg:bg-custom-light-blue" : "bg-custom-light-blue lg:bg-secondary"} mx-4 mt-5 flex h-12 items-center justify-between rounded-md p-4 lg:mx-20 lg:h-24 lg:px-7`}
       >
-        <div className="flex gap-2 text-custom-dark-blue">
-          <FaTooth className="text-3xl" />
+        <div className="flex items-center gap-3 text-custom-dark-blue">
+          <div className="rounded-full border-b-2 border-l-2 border-custom-mid-blue p-3">
+            <FaTooth className="text-3xl text-custom-mid-blue" />
+          </div>
           <h1 className="text-xl font-bold">Ece Dental</h1>
         </div>
         <div className="lg:hidden">

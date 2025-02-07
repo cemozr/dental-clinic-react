@@ -7,7 +7,7 @@ type MedicalInfoProps = {
 
 export default function MedicalInfo({ register, errors }: MedicalInfoProps) {
   return (
-    <fieldset className="flex flex-col gap-4">
+    <fieldset id="medical-info-section" className="flex flex-col gap-4">
       <label htmlFor="allergies" className="font-semibold">
         Alerjiler
       </label>
