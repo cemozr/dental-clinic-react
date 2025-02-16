@@ -97,6 +97,7 @@ export default function AppointmentInfo({
             className="h-12 w-full rounded-md pl-3"
             id="appointment-date"
             minDate={new Date()}
+            dateFormat="dd/MM/yyyy"
             placeholderText="gg/aa/yyyy"
             locale="tr"
             selected={field.value}

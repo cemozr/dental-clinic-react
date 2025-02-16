@@ -13,6 +13,7 @@ import {
 } from "../../../../states/appointmentSlice";
 import { AppDispatch } from "../../../../states/store";
 import { toast, Zoom } from "react-toastify";
+import { useEffect } from "react";
 
 export type AppointmentForm = z.infer<typeof AppointmentFormSchema>;
 
@@ -32,13 +33,13 @@ export default function AppointmentForm({
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm<AppointmentForm>({
     resolver: zodResolver(AppointmentFormSchema),
   });
 
   const onSubmit: SubmitHandler<AppointmentForm> = (data) => {
-    console.log(data);
     const formattedAppointmentDate: string = data
       .appointmentDate!.toISOString()
       .split("T")[0];
@@ -62,34 +63,12 @@ export default function AppointmentForm({
       name: data.name,
       tel: data.tel,
     };
-    try {
-      dispatch(createAppointment(fixedData));
-      toast.success("Randevunuz başarıyla oluşturuldu.", {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Zoom,
-      });
-    } catch {
-      toast.error("Randevunuz oluşturulamadı.", {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Zoom,
-      });
-    }
-  };
 
+    dispatch(createAppointment(fixedData));
+  };
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful]);
   return (
     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
       {currentSection === "Randevu Bilgileri" ? (

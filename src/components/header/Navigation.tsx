@@ -6,6 +6,7 @@ export default function Navigation() {
     { name: "Hizmetler", to: "/services" },
     { name: "Hakkında", to: "/about" },
     { name: "İletişim", to: "/contact" },
+    { name: "Yönetim", to: "/auth" },
   ];
   return (
     <>

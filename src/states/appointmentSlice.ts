@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { toast, Zoom } from "react-toastify";
 
 export type Appointment = {
   id?: string;
@@ -72,10 +73,32 @@ const appointmentSlice = createSlice({
       .addCase(createAppointment.fulfilled, (state, action) => {
         state.appointments.push(action.payload!);
         state.isLoading = false;
+        toast.success("Randevunuz başarıyla oluşturuldu.", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Zoom,
+        });
       })
       .addCase(createAppointment.rejected, (state, err) => {
         console.error("appointment couldn't created", err);
         state.isLoading = false;
+        toast.error("Randevunuz oluşturulamadı.", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Zoom,
+        });
       });
   },
 });

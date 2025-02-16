@@ -14,6 +14,25 @@ body {
   animation: translate 0.5s;
 }
 
+#appointment-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#personal-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#medical-info-section {
+  animation: horizontalTranslate 0.5s;
+}
+
+#appointment-image {
+  animation: fadeIn 1.5s ease-out;
+}
+#auth-section {
+  animation: fadeIn 1.5s ease-out;
+}
+
 @keyframes translate {
   0% {
     transform: translateY(-100%);
@@ -30,21 +49,6 @@ body {
 p {
   font-size: large;
 }
-#appointment-info-section {
-  animation: horizontalTranslate 0.5s;
-}
-
-#personal-info-section {
-  animation: horizontalTranslate 0.5s;
-}
-
-#medical-info-section {
-  animation: horizontalTranslate 0.5s;
-}
-
-#appointment-image {
-  animation: opacityTranslate 1.5s ease-out;
-}
 
 @keyframes horizontalTranslate {
   0% {
@@ -57,7 +61,7 @@ p {
   }
 }
 
-@keyframes opacityTranslate {
+@keyframes fadeIn {
   0% {
     display: none;
     opacity: 0;

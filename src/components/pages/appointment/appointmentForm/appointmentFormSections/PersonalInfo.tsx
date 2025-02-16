@@ -99,6 +99,7 @@ export default function PersonalInfo({
             className="h-12 w-full rounded-md pl-3"
             id="birth-date"
             locale="tr"
+            dateFormat="dd/MM/yyyy"
             placeholderText="gg/aa/yyyy"
             maxDate={new Date()}
             selected={field.value}
