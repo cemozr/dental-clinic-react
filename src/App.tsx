@@ -11,6 +11,8 @@ import { ToastContainer, Zoom } from "react-toastify";
 import LoginPage from "./components/pages/auth/LoginPage";
 import AdminPage from "./components/pages/admin/AdminPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import AppointmentManagementPage from "./components/pages/admin/appointmentManagement/AppointmentManagementPage";
+import EmployeeManagementPage from "./components/pages/admin/employeeManagement/EmployeeManagementPage";
 function App() {
   const location = useLocation();
   const { pathname } = location;
@@ -47,7 +49,24 @@ function App() {
               <AdminPage />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route
+            path="appointment-management"
+            element={
+              <ProtectedRoute>
+                <AppointmentManagementPage />{" "}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="employee-management"
+            element={
+              <ProtectedRoute>
+                <EmployeeManagementPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
       <Footer />
     </div>

@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../states/store";
 import { login } from "../../../../states/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 type AuthForm = z.infer<typeof authSchema>;
 
@@ -24,18 +23,16 @@ export default function AuthForm() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { isLoading, status } = useSelector(
-    (state: RootState) => state.authReducer,
-  );
+  const { isLoading } = useSelector((state: RootState) => state.authReducer);
 
   const onSubmit: SubmitHandler<AuthForm> = (loginData) => {
-    dispatch(login(loginData));
+    dispatch(login(loginData)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        navigate("/admin");
+      }
+    });
   };
-  useEffect(() => {
-    if (status === "signed in") {
-      navigate("/admin");
-    }
-  }, [status]);
+
   return (
     <section
       id="auth-section"

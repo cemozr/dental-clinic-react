@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { toast, Zoom } from "react-toastify";
@@ -64,7 +64,11 @@ export const createAppointment = createAsyncThunk(
 const appointmentSlice = createSlice({
   name: "appointment",
   initialState,
-  reducers: {},
+  reducers: {
+    setAppointments: (state, action: PayloadAction<Appointment[]>) => {
+      state.appointments = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createAppointment.pending, (state) => {
@@ -105,4 +109,4 @@ const appointmentSlice = createSlice({
 
 export default appointmentSlice.reducer;
 
-export const {} = appointmentSlice.actions;
+export const { setAppointments } = appointmentSlice.actions;

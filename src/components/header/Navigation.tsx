@@ -1,12 +1,16 @@
+import useAuth from "../../hooks/useAuth";
 import Button from "../UI/Button";
 
 export default function Navigation() {
+  const { userStatus } = useAuth();
   const menus: { name: string; to: string }[] = [
     { name: "Ana Sayfa", to: "/" },
     { name: "Hizmetler", to: "/services" },
     { name: "Hakkında", to: "/about" },
     { name: "İletişim", to: "/contact" },
-    { name: "Yönetim", to: "/auth" },
+    userStatus === "signed in"
+      ? { name: "Yönetim", to: "/admin" }
+      : { name: "Yönetim", to: "/auth" },
   ];
   return (
     <>

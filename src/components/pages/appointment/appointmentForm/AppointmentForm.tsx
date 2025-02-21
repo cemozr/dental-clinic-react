@@ -12,7 +12,6 @@ import {
   type Appointment,
 } from "../../../../states/appointmentSlice";
 import { AppDispatch } from "../../../../states/store";
-import { toast, Zoom } from "react-toastify";
 import { useEffect } from "react";
 
 export type AppointmentForm = z.infer<typeof AppointmentFormSchema>;
