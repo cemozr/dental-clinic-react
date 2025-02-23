@@ -36,6 +36,11 @@ type ColoredLinkProps = {
   children: ReactNode;
 } & ComponentPropsWithoutRef<"button">;
 
+type IconButtonProps = {
+  el: "icon-button";
+  children: ReactNode;
+} & ComponentPropsWithoutRef<"button">;
+
 export default function Button(
   props:
     | ButtonProps
@@ -44,7 +49,8 @@ export default function Button(
     | ColoredLinkButton
     | ColoredLinkProps
     | WideButtonProps
-    | TimeButton,
+    | TimeButton
+    | IconButtonProps,
 ) {
   switch (props.el) {
     case "link":
@@ -91,6 +97,13 @@ export default function Button(
         <button
           {...rest}
           className={`${props.isSelected ? "bg-secondary text-custom-mid-blue" : "bg-custom-mid-blue text-secondary"} h-8 w-14 rounded-full font-semibold`}
+        ></button>
+      );
+    case "icon-button":
+      return (
+        <button
+          className="text-2xl text-custom-mid-blue hover:text-custom-sky-blue"
+          {...props}
         ></button>
       );
     default:

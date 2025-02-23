@@ -61,6 +61,7 @@ export default function AppointmentForm({
       medicines: data.medicines,
       name: data.name,
       tel: data.tel,
+      status: "Beklemede",
     };
 
     dispatch(createAppointment(fixedData));

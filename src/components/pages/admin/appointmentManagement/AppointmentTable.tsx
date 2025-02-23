@@ -1,20 +1,31 @@
+//hooks
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../../UI/Loading";
+import usePagination from "../../../../hooks/usePagination";
+//firebase
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../config/firebase";
+//states
 import { type AppDispatch, type RootState } from "../../../../states/store";
 import {
+  deleteAppointment,
   setAppointments,
+  updateAppointment,
   type Appointment,
 } from "../../../../states/appointmentSlice";
-import usePagination from "../../../../hooks/usePagination";
+//icons
+import { MdDelete, MdSettings, MdInfo } from "react-icons/md";
+//UI elements
+import Button from "../../../UI/Button";
+import Loading from "../../../UI/Loading";
 
 export default function AppointmentTable() {
   const dispatch: AppDispatch = useDispatch();
   const { isLoading, appointments } = useSelector(
     (state: RootState) => state.appointmentReducer,
   );
+  const pagination = usePagination({ itemList: appointments, itemsPerPage: 4 });
+
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "appointments"),
@@ -26,10 +37,9 @@ export default function AppointmentTable() {
         dispatch(setAppointments(temp));
       },
     );
+
     return () => unsubscribe();
   }, []);
-
-  const pagination = usePagination({ itemList: appointments, itemsPerPage: 4 });
 
   return (
     <div className="relative flex h-full w-full flex-col overflow-scroll rounded-lg bg-white bg-clip-border text-gray-700 shadow-md">
@@ -60,6 +70,11 @@ export default function AppointmentTable() {
             <th className="border-b border-slate-200 bg-slate-50 p-4">
               <p className="text-sm font-normal leading-none text-slate-500">
                 Telefon
+              </p>
+            </th>
+            <th className="border-b border-slate-200 bg-slate-50">
+              <p className="text-sm font-normal leading-none text-slate-500">
+                Durum
               </p>
             </th>
             <th className="border-b border-slate-200 bg-slate-50">
@@ -99,12 +114,52 @@ export default function AppointmentTable() {
                     {appointmentData.tel}
                   </p>
                 </td>
-
+                <td>
+                  <select
+                    name="status"
+                    id="status"
+                    defaultValue={appointmentData.status}
+                    className={`rounded-md ${appointmentData.status === "Onaylandı" ? "bg-success" : appointmentData.status === "İptal" ? "bg-error" : "bg-yellow-500"} p-1 text-secondary hover:cursor-pointer`}
+                    onChange={(e) =>
+                      updateAppointment(
+                        appointmentData.id,
+                        e.currentTarget.value,
+                      )
+                    }
+                  >
+                    <option
+                      value="Beklemede"
+                      className="bg-slate-100 text-custom-dark-blue hover:cursor-pointer"
+                    >
+                      Beklemede
+                    </option>
+                    <option
+                      value="Onaylandı"
+                      className="bg-slate-100 text-custom-dark-blue hover:cursor-pointer"
+                    >
+                      Onaylandı
+                    </option>
+                    <option
+                      value="İptal"
+                      className="bg-slate-100 text-custom-dark-blue hover:cursor-pointer"
+                    >
+                      İptal
+                    </option>
+                  </select>
+                </td>
                 <td className="flex justify-center gap-4 py-5">
-                  <button>Detaylar...</button>
-                  <button>Onayla</button>
-                  <button>Düzenle</button>
-                  <button>Sil</button>
+                  <Button el="icon-button">
+                    <MdInfo />
+                  </Button>
+                  <Button el="icon-button">
+                    <MdSettings />
+                  </Button>
+                  <Button
+                    el="icon-button"
+                    onClick={() => deleteAppointment(appointmentData.id)}
+                  >
+                    <MdDelete />
+                  </Button>
                 </td>
               </tr>
             );
@@ -115,8 +170,8 @@ export default function AppointmentTable() {
       <div className="flex items-center justify-between px-4 py-3">
         <div className="text-sm text-slate-500">
           Gösteriliyor:{" "}
-          <b>{`${pagination.startIndex} - ${pagination.endIndex}`}</b> Toplam:{" "}
-          {pagination.totalPages}
+          <b>{`${pagination.startIndex} - ${pagination.endIndex}`} </b>Toplam
+          Sayfa: {pagination.totalPages}
         </div>
         <div className="flex space-x-1">
           <button

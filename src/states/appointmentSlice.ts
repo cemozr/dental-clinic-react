@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 import { toast, Zoom } from "react-toastify";
 
@@ -19,6 +25,7 @@ export type Appointment = {
   medicines: string;
   name: string;
   tel: string;
+  status: string;
 };
 
 type InitialState = {
@@ -44,6 +51,7 @@ const initialState: InitialState = {
       medicines: "",
       name: "",
       tel: "",
+      status: "Beklemede",
     },
   ],
   isLoading: false,
@@ -60,6 +68,28 @@ export const createAppointment = createAsyncThunk(
     }
   },
 );
+
+export const deleteAppointment = async (appointmentId: Appointment["id"]) => {
+  try {
+    await deleteDoc(doc(db, "appointments", appointmentId!));
+  } catch (err) {
+    console.error("appointment couldn't delete", err);
+  }
+};
+
+export const updateAppointment = async (
+  appointmentId: Appointment["id"],
+  status: Appointment["status"],
+) => {
+  try {
+    const docRef = doc(db, "appointments", appointmentId!);
+    await updateDoc(docRef, {
+      status: status,
+    });
+  } catch (err) {
+    console.error("Update failed", err);
+  }
+};
 
 const appointmentSlice = createSlice({
   name: "appointment",
