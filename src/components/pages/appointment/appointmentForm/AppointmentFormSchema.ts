@@ -8,6 +8,7 @@ export const AppointmentFormSchema = z.object({
     .refine((date) => date instanceof Date && !isNaN(date.getTime()), {
       message: "Bir tarih seçiniz",
     }),
+
   appointmentTime: z.string().min(1, "Lütfen saat seçiniz."),
 
   medicalIssue: z

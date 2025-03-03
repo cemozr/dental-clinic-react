@@ -7,12 +7,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../UI/Button";
 import { useDispatch } from "react-redux";
-import {
-  createAppointment,
-  type Appointment,
-} from "../../../../states/appointmentSlice";
+import { createAppointment } from "../../../../states/appointmentSlice";
 import { AppDispatch } from "../../../../states/store";
 import { useEffect } from "react";
+import useFormDataFix from "../../../../hooks/useFormDataFix";
 
 export type AppointmentForm = z.infer<typeof AppointmentFormSchema>;
 
@@ -39,31 +37,7 @@ export default function AppointmentForm({
   });
 
   const onSubmit: SubmitHandler<AppointmentForm> = (data) => {
-    const formattedAppointmentDate: string = data
-      .appointmentDate!.toISOString()
-      .split("T")[0];
-    const formattedBirthDate: string = data
-      .birthDate!.toISOString()
-      .split("T")[0];
-
-    const fixedData: Appointment = {
-      appointmentDate: formattedAppointmentDate,
-      appointmentTime: data.appointmentTime,
-      birthDate: formattedBirthDate,
-      dentist: data.specialist,
-      extraInfo: data.extraInfo,
-      familyMedicalHistory: data.familyMedicalHistory,
-      gender: data.gender,
-      idNumber: data.idNumber,
-      mail: data.mail,
-      medicalHistory: data.medicalHistory,
-      medicalIssue: data.medicalIssue,
-      medicines: data.medicines,
-      name: data.name,
-      tel: data.tel,
-      status: "Beklemede",
-    };
-
+    const fixedData = useFormDataFix(data);
     dispatch(createAppointment(fixedData));
   };
   useEffect(() => {

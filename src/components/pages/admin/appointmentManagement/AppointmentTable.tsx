@@ -10,6 +10,7 @@ import { type AppDispatch, type RootState } from "../../../../states/store";
 import {
   deleteAppointment,
   setAppointments,
+  setShowDetails,
   updateAppointment,
   type Appointment,
 } from "../../../../states/appointmentSlice";
@@ -42,9 +43,9 @@ export default function AppointmentTable() {
   }, []);
 
   return (
-    <div className="relative flex h-full w-full flex-col overflow-scroll rounded-lg bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex h-full w-full flex-col overflow-x-scroll rounded-lg bg-white bg-clip-border text-gray-700 shadow-md">
       {isLoading && <Loading />}
-      <table className="w-full min-w-max table-auto text-left">
+      <table className="w-full min-w-max table-fixed text-left">
         <thead>
           <tr>
             <th className="border-b border-slate-200 bg-slate-50 p-4">
@@ -95,7 +96,7 @@ export default function AppointmentTable() {
                   </p>
                 </td>
                 <td className="p-4 py-5">
-                  <p className="text-sm text-slate-500">
+                  <p className="truncate text-sm text-slate-500">
                     {appointmentData.medicalIssue}
                   </p>
                 </td>
@@ -148,13 +149,18 @@ export default function AppointmentTable() {
                   </select>
                 </td>
                 <td className="flex justify-center gap-4 py-5">
-                  <Button el="icon-button">
+                  <Button
+                    el="icon-button"
+                    title="Randevu Detayı"
+                    onClick={() => dispatch(setShowDetails(appointmentData))}
+                  >
                     <MdInfo />
                   </Button>
-                  <Button el="icon-button">
+                  <Button el="icon-button" title="Düzenle">
                     <MdSettings />
                   </Button>
                   <Button
+                    title="Sil"
                     el="icon-button"
                     onClick={() => deleteAppointment(appointmentData.id)}
                   >

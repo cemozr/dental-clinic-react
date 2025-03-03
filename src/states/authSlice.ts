@@ -36,8 +36,30 @@ export const login = createAsyncThunk(
         loginData.mail,
         loginData.password,
       );
+      toast.success("Hoşgeldiniz👋", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+      });
     } catch (err) {
       console.error("login failed", err);
+      toast.error("Giriş başarısız. Bilgilerinizi kontrol ediniz.", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Zoom,
+      });
     }
   },
 );
@@ -45,8 +67,30 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
     signOut(auth);
+    toast.success("Çıkış Yapıldı.", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
+    });
   } catch (err) {
     console.error("logout failed", err);
+    toast.error("Çıkış Başarısız.", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
+    });
   }
 });
 
@@ -77,32 +121,9 @@ const authSlice = createSlice({
         state.isLoading = false;
 
         state.userStatus = "signed out";
-
-        toast.success("Çıkış Yapıldı.", {
-          position: "bottom-left",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Zoom,
-        });
       })
       .addCase(logout.rejected, (state) => {
         state.isLoading = false;
-        toast.error("Çıkış Başarısız.", {
-          position: "bottom-left",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Zoom,
-        });
       });
   },
 });

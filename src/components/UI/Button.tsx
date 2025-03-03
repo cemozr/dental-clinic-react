@@ -71,7 +71,7 @@ export default function Button(
     case "colored-link-button":
       return (
         <Link
-          className="h-14 w-34 rounded-lg bg-custom-mid-blue p-4 text-center font-semibold text-secondary xl:w-40"
+          className="h-14 w-34 rounded-lg bg-custom-mid-blue p-4 text-center font-semibold text-secondary hover:bg-blue-600 xl:w-40"
           to={props.to}
         >
           {props.children}
@@ -110,7 +110,7 @@ export default function Button(
       return (
         <button
           {...props}
-          className="h-14 w-34 rounded-lg bg-custom-mid-blue font-semibold text-secondary"
+          className="h-14 w-34 rounded-lg bg-custom-mid-blue font-semibold text-secondary hover:bg-blue-600"
         ></button>
       );
   }

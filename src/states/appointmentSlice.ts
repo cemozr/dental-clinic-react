@@ -20,17 +20,21 @@ export type Appointment = {
   gender: string;
   idNumber: string;
   mail: string;
+  allergies: string;
   medicalHistory: string;
   medicalIssue: string;
   medicines: string;
   name: string;
   tel: string;
+  address: string;
   status: string;
 };
 
 type InitialState = {
   appointments: Appointment[];
   isLoading: boolean;
+  showDetails: boolean;
+  selectedAppointment: Appointment | null;
 };
 
 const initialState: InitialState = {
@@ -46,15 +50,19 @@ const initialState: InitialState = {
       gender: "",
       idNumber: "",
       mail: "",
+      allergies: "",
       medicalHistory: "",
       medicalIssue: "",
       medicines: "",
       name: "",
       tel: "",
+      address: "",
       status: "Beklemede",
     },
   ],
   isLoading: false,
+  showDetails: false,
+  selectedAppointment: null,
 };
 
 export const createAppointment = createAsyncThunk(
@@ -98,6 +106,12 @@ const appointmentSlice = createSlice({
     setAppointments: (state, action: PayloadAction<Appointment[]>) => {
       state.appointments = action.payload;
     },
+    setShowDetails: (state, action: PayloadAction<Appointment | null>) => {
+      state.showDetails = !state.showDetails;
+      if (state.showDetails === true) {
+        state.selectedAppointment = action.payload;
+      } else state.selectedAppointment = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -139,4 +153,4 @@ const appointmentSlice = createSlice({
 
 export default appointmentSlice.reducer;
 
-export const { setAppointments } = appointmentSlice.actions;
+export const { setAppointments, setShowDetails } = appointmentSlice.actions;
