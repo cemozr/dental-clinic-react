@@ -10,6 +10,7 @@ import { type AppDispatch, type RootState } from "../../../../states/store";
 import {
   deleteAppointment,
   setAppointments,
+  setEditMode,
   setShowDetails,
   updateAppointment,
   type Appointment,
@@ -45,7 +46,7 @@ export default function AppointmentTable() {
   return (
     <div className="relative flex h-full w-full flex-col overflow-x-scroll rounded-lg bg-white bg-clip-border text-gray-700 shadow-md">
       {isLoading && <Loading />}
-      <table className="w-full min-w-max table-fixed text-left">
+      <table className="w-full min-w-max table-auto text-left lg:table-fixed">
         <thead>
           <tr>
             <th className="border-b border-slate-200 bg-slate-50 p-4">
@@ -54,18 +55,18 @@ export default function AppointmentTable() {
               </p>
             </th>
             <th className="border-b border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm font-normal leading-none text-slate-500">
-                Hastanın Rahatsızlığı
-              </p>
-            </th>
-            <th className="border-b border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm font-normal leading-none text-slate-500">
+              <p className="hidden text-sm font-normal leading-none text-slate-500 lg:block">
                 Hekim
               </p>
             </th>
             <th className="border-b border-slate-200 bg-slate-50 p-4">
               <p className="text-sm font-normal leading-none text-slate-500">
                 Randevu Tarihi
+              </p>
+            </th>
+            <th className="border-b border-slate-200 bg-slate-50 p-4">
+              <p className="text-sm font-normal leading-none text-slate-500">
+                Randevu Saati
               </p>
             </th>
             <th className="border-b border-slate-200 bg-slate-50 p-4">
@@ -91,23 +92,23 @@ export default function AppointmentTable() {
                 className="border-b border-slate-200 hover:bg-slate-50"
               >
                 <td className="p-4 py-5">
-                  <p className="block text-sm font-semibold text-slate-800">
+                  <p className="block truncate text-sm font-semibold text-slate-800">
                     {appointmentData.name}
                   </p>
                 </td>
                 <td className="p-4 py-5">
-                  <p className="truncate text-sm text-slate-500">
-                    {appointmentData.medicalIssue}
-                  </p>
-                </td>
-                <td className="p-4 py-5">
-                  <p className="text-sm text-slate-500">
-                    {appointmentData.dentist}
+                  <p className="hidden truncate text-sm text-slate-500 lg:block">
+                    {appointmentData.specialist}
                   </p>
                 </td>
                 <td className="p-4 py-5">
                   <p className="text-sm text-slate-500">
                     {appointmentData.appointmentDate}
+                  </p>
+                </td>
+                <td className="p-4 py-5">
+                  <p className="text-sm text-slate-500">
+                    {appointmentData.appointmentTime}
                   </p>
                 </td>
                 <td className="p-4 py-5">
@@ -156,7 +157,11 @@ export default function AppointmentTable() {
                   >
                     <MdInfo />
                   </Button>
-                  <Button el="icon-button" title="Düzenle">
+                  <Button
+                    el="icon-button"
+                    title="Düzenle"
+                    onClick={() => dispatch(setEditMode(appointmentData))}
+                  >
                     <MdSettings />
                   </Button>
                   <Button

@@ -14,7 +14,7 @@ export default function useFormDataFix(data: AppointmentForm) {
     appointmentDate: formattedAppointmentDate,
     appointmentTime: data.appointmentTime,
     birthDate: formattedBirthDate,
-    dentist: data.specialist,
+    specialist: data.specialist,
     extraInfo: data.extraInfo,
     familyMedicalHistory: data.familyMedicalHistory,
     gender: data.gender,

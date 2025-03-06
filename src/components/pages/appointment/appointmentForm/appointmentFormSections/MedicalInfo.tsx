@@ -1,5 +1,6 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { type AppointmentForm } from "../AppointmentForm";
+
 type MedicalInfoProps = {
   register: UseFormRegister<any>;
   errors: FieldErrors<AppointmentForm>;
@@ -60,17 +61,20 @@ export default function MedicalInfo({ register, errors }: MedicalInfoProps) {
       {errors.familyMedicalHistory && (
         <p className="text-error">{errors.familyMedicalHistory.message}</p>
       )}
-      <div className="flex gap-2">
+
+      <div className={`flex gap-2`}>
         <input
           type="checkbox"
           id="privacy-check"
           {...register("privacyCheck")}
         />
+
         <p>
           Kişisel bilgilerimi ve sağlık bilgilerimi tarafınızla paylaşmayı ve
-          bilgilerimin tarafınızca saklanmasını onaylıyorum
+          bilgilerimin tarafınızca saklanmasını onaylıyorum.
         </p>
       </div>
+
       {errors.privacyCheck && (
         <p className="text-error">{errors.privacyCheck.message}</p>
       )}

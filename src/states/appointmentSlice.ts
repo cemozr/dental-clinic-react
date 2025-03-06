@@ -14,7 +14,7 @@ export type Appointment = {
   appointmentDate: string;
   appointmentTime: string;
   birthDate: string;
-  dentist: string;
+  specialist: string;
   extraInfo: string;
   familyMedicalHistory: string;
   gender: string;
@@ -27,7 +27,7 @@ export type Appointment = {
   name: string;
   tel: string;
   address: string;
-  status: string;
+  status?: string;
 };
 
 type InitialState = {
@@ -35,6 +35,7 @@ type InitialState = {
   isLoading: boolean;
   showDetails: boolean;
   selectedAppointment: Appointment | null;
+  editMode: boolean;
 };
 
 const initialState: InitialState = {
@@ -44,7 +45,7 @@ const initialState: InitialState = {
       appointmentDate: "",
       appointmentTime: "",
       birthDate: "",
-      dentist: "",
+      specialist: "",
       extraInfo: "",
       familyMedicalHistory: "",
       gender: "",
@@ -63,6 +64,7 @@ const initialState: InitialState = {
   isLoading: false,
   showDetails: false,
   selectedAppointment: null,
+  editMode: false,
 };
 
 export const createAppointment = createAsyncThunk(
@@ -99,6 +101,36 @@ export const updateAppointment = async (
   }
 };
 
+export const editAppointment = createAsyncThunk(
+  "appointment/editAppointment",
+  async (newData: { data: Appointment; id: Appointment["id"] }) => {
+    try {
+      const docRef = doc(db, "appointments", newData.id!);
+      await updateDoc(docRef, {
+        appointmentDate: newData.data.appointmentDate,
+        appointmentTime: newData.data.appointmentTime,
+        birthDate: newData.data.birthDate,
+        specialist: newData.data.specialist,
+        extraInfo: newData.data.extraInfo,
+        familyMedicalHistory: newData.data.familyMedicalHistory,
+        gender: newData.data.gender,
+        idNumber: newData.data.idNumber,
+        mail: newData.data.mail,
+        allergies: newData.data.allergies,
+        medicalHistory: newData.data.medicalHistory,
+        medicalIssue: newData.data.medicalIssue,
+        medicines: newData.data.medicines,
+        name: newData.data.name,
+        tel: newData.data.tel,
+        address: newData.data.address,
+      });
+      // setEditMode(null);
+    } catch (err) {
+      console.error("Update failed", err);
+    }
+  },
+);
+
 const appointmentSlice = createSlice({
   name: "appointment",
   initialState,
@@ -109,6 +141,12 @@ const appointmentSlice = createSlice({
     setShowDetails: (state, action: PayloadAction<Appointment | null>) => {
       state.showDetails = !state.showDetails;
       if (state.showDetails === true) {
+        state.selectedAppointment = action.payload;
+      } else state.selectedAppointment = null;
+    },
+    setEditMode: (state, action: PayloadAction<Appointment | null>) => {
+      state.editMode = !state.editMode;
+      if (state.editMode === true) {
         state.selectedAppointment = action.payload;
       } else state.selectedAppointment = null;
     },
@@ -147,10 +185,44 @@ const appointmentSlice = createSlice({
           theme: "light",
           transition: Zoom,
         });
+      })
+      .addCase(editAppointment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editAppointment.fulfilled, (state) => {
+        state.isLoading = false;
+        state.editMode = false;
+        state.showDetails = false;
+        toast.success("Randevu bilgileri düzenlendi.", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Zoom,
+        });
+      })
+      .addCase(editAppointment.rejected, (state) => {
+        state.isLoading = false;
+        toast.error("Randevunuz bilgileri düzenlenemedi.", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Zoom,
+        });
       });
   },
 });
 
 export default appointmentSlice.reducer;
 
-export const { setAppointments, setShowDetails } = appointmentSlice.actions;
+export const { setAppointments, setShowDetails, setEditMode } =
+  appointmentSlice.actions;

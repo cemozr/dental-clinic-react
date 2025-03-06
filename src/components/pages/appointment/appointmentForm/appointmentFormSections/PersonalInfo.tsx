@@ -93,7 +93,6 @@ export default function PersonalInfo({
       <Controller
         name="birthDate"
         control={control}
-        defaultValue={null}
         render={({ field }) => (
           <DatePicker
             className="h-12 w-full rounded-md pl-3"
@@ -119,7 +118,6 @@ export default function PersonalInfo({
         <select
           id="gender"
           className="h-12 w-full appearance-none rounded-md pl-8"
-          defaultValue=""
           {...register("gender")}
         >
           <option>Erkek</option>

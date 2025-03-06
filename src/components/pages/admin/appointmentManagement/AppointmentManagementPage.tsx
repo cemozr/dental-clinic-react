@@ -6,7 +6,7 @@ import DetailsCard from "./DetailsCard";
 import { RootState } from "../../../../states/store";
 
 export default function AppointmentManagementPage() {
-  const { showDetails } = useSelector(
+  const { showDetails, editMode } = useSelector(
     (state: RootState) => state.appointmentReducer,
   );
 
@@ -27,7 +27,7 @@ export default function AppointmentManagementPage() {
       </div>
       <AppointmentTable />
       {showDetails && <DetailsCard />}
-      {/* <AppointmentEdit /> */}
+      {editMode && <AppointmentEdit />}
     </main>
   );
 }

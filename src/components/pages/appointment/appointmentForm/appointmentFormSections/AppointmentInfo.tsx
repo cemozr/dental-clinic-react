@@ -90,7 +90,6 @@ export default function AppointmentInfo({
       <Controller
         name="appointmentDate"
         control={control}
-        defaultValue={null}
         render={({ field }) => (
           <DatePicker
             {...field}
@@ -108,7 +107,7 @@ export default function AppointmentInfo({
       {errors.appointmentDate && (
         <p className="text-error">{errors.appointmentDate?.message}</p>
       )}
-      <p className="font-semibold">Müsait Saatler</p>
+      <p className="font-semibold">Randevu Saati</p>
       <ul className="grid grid-cols-5 gap-4 md:grid-cols-10 lg:grid-cols-6 xl:grid-cols-10">
         {workingHours.map((hour) => {
           return (

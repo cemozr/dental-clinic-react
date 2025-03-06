@@ -16,13 +16,10 @@ export type AppointmentForm = z.infer<typeof AppointmentFormSchema>;
 
 type AppointmentFormProps = {
   index: number;
-  currentSection: string;
+  currentSection?: string;
 };
 
-export default function AppointmentForm({
-  index,
-  currentSection,
-}: AppointmentFormProps) {
+export default function AppointmentForm({ index }: AppointmentFormProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const {
@@ -38,6 +35,7 @@ export default function AppointmentForm({
 
   const onSubmit: SubmitHandler<AppointmentForm> = (data) => {
     const fixedData = useFormDataFix(data);
+
     dispatch(createAppointment(fixedData));
   };
   useEffect(() => {
@@ -45,14 +43,14 @@ export default function AppointmentForm({
   }, [isSubmitSuccessful]);
   return (
     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-      {currentSection === "Randevu Bilgileri" ? (
+      {index === 0 ? (
         <AppointmentInfo
           register={register}
           control={control}
           setValue={setValue}
           errors={errors as FieldErrors<AppointmentForm>}
         />
-      ) : currentSection === "Kişisel Bilgiler" ? (
+      ) : index === 1 ? (
         <PersonalInfo
           register={register}
           control={control}

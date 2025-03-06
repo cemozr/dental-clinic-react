@@ -32,6 +32,12 @@ body {
 #auth-section {
   animation: fadeIn 1.5s ease-out;
 }
+.animate-slide {
+  animation: horizontalTranslate 0.5s;
+}
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-out;
+}
 
 @keyframes translate {
   0% {
