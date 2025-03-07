@@ -1,6 +1,5 @@
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import Button from "../../../../UI/Button";
-import AppointmentForm from "../../../appointment/appointmentForm/AppointmentForm";
 import { useState } from "react";
 import { MdArrowForward, MdArrowBack } from "react-icons/md";
 import { setEditMode } from "../../../../../states/appointmentSlice";

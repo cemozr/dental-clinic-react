@@ -30,6 +30,8 @@ export default function AppointmentInfo({
 }: AppointmentInfoProps) {
   registerLocale("tr", tr);
 
+  const isWeekday = (date: Date) => date.getDay() !== 0;
+
   const workingHours: string[] = [
     "09:00",
     "09:30",
@@ -97,6 +99,7 @@ export default function AppointmentInfo({
             id="appointment-date"
             minDate={new Date()}
             dateFormat="dd/MM/yyyy"
+            filterDate={isWeekday}
             placeholderText="gg/aa/yyyy"
             locale="tr"
             selected={field.value}

@@ -88,7 +88,7 @@ export default function Button(
       return (
         <button
           {...props}
-          className="h-14 w-full rounded-lg bg-custom-mid-blue font-semibold text-secondary"
+          className="h-14 w-full rounded-lg bg-custom-mid-blue font-semibold text-secondary hover:bg-blue-600"
         ></button>
       );
     case "time-button":
