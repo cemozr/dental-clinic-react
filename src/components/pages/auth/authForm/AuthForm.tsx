@@ -34,10 +34,7 @@ export default function AuthForm() {
   };
 
   return (
-    <section
-      id="auth-section"
-      className="grid max-h-96 gap-4 p-10 lg:col-span-7 xl:col-span-5"
-    >
+    <section className="grid max-h-96 gap-4 p-10 lg:col-span-7 xl:col-span-5">
       {isLoading && <Loading />}
       <h1 className="text-4xl font-bold">Hoşgeldin</h1>
       <p>Lütfen yönetim paneline erişmek için giriş yap.🔒 </p>

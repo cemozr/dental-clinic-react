@@ -1,15 +1,17 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { db } from "../config/firebase";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   updateDoc,
 } from "firebase/firestore";
 import axios from "axios";
+import { toast, Zoom } from "react-toastify";
 
-type Employee = {
+export type Employee = {
   id?: string;
   name: string;
   title: string;
@@ -25,6 +27,9 @@ type InitialState = {
   employees: Employee[];
   isLoading: boolean;
   showEmployeeForm: boolean;
+  editMode: boolean;
+  selectedEmployee: Employee | null;
+  showEmployeeDetails: boolean;
 };
 const initialState: InitialState = {
   employees: [
@@ -42,6 +47,9 @@ const initialState: InitialState = {
   ],
   isLoading: false,
   showEmployeeForm: false,
+  editMode: false,
+  selectedEmployee: null,
+  showEmployeeDetails: false,
 };
 
 export const uploadImage = async (file: File) => {
@@ -103,12 +111,55 @@ export const updateEmployeeStatus = async (
   }
 };
 
+export const deleteEmployee = async (employeeId: Employee["id"]) => {
+  try {
+    await deleteDoc(doc(db, "employees", employeeId!));
+    toast.success("Personel Kaydı Silindi.", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
+    });
+  } catch (err) {
+    console.error("delete failed", err);
+    toast.error("İşlem Başarısız.", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Zoom,
+    });
+  }
+};
+
 const employeeSlice = createSlice({
   name: "employeeSlice",
   initialState,
   reducers: {
     setShowEmployeeForm: (state) => {
       state.showEmployeeForm = !state.showEmployeeForm;
+    },
+    setEditMode: (state, action: PayloadAction<Employee | boolean>) => {
+      if (typeof action.payload === "boolean") {
+        state.editMode = false;
+      } else {
+        state.selectedEmployee = action.payload;
+        state.editMode = true;
+      }
+    },
+    setShowEmployeeDetails: (state, action: PayloadAction<Employee | null>) => {
+      state.showEmployeeDetails = !state.showEmployeeDetails;
+
+      state.selectedEmployee = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -139,4 +190,5 @@ const employeeSlice = createSlice({
 
 export default employeeSlice.reducer;
 
-export const { setShowEmployeeForm } = employeeSlice.actions;
+export const { setShowEmployeeForm, setEditMode, setShowEmployeeDetails } =
+  employeeSlice.actions;

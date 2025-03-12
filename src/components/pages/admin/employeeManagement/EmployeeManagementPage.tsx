@@ -1,16 +1,21 @@
-import { IoMdCloseCircleOutline } from "react-icons/io";
 import Button from "../../../UI/Button";
 import AddEmployeeForm from "./addEmployee/AddEmployeeForm";
 import EmployeeTable from "./EmployeeTable";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowEmployeeForm } from "../../../../states/employeeSlice";
+import {
+  setEditMode,
+  setShowEmployeeForm,
+} from "../../../../states/employeeSlice";
 import { RootState } from "../../../../states/store";
+import EmployeeDetailsCard from "./employeeDetails/EmployeeDetailsCard";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeeManagementPage() {
   const dispatch = useDispatch();
-  const { showEmployeeForm } = useSelector(
+  const { showEmployeeForm, showEmployeeDetails } = useSelector(
     (state: RootState) => state.employeeReducer,
   );
+  const navigate = useNavigate();
   return (
     <main className="my-10 grid flex-grow px-4 lg:px-0">
       <div className="mb-8 flex flex-col items-start justify-between gap-6 lg:mb-4 lg:flex-row lg:items-center">
@@ -20,29 +25,23 @@ export default function EmployeeManagementPage() {
             Mevcut çalışanlarınızı görüntüleyebilir, düzenleyebilirsiniz.
           </p>
         </div>
-        <div>
-          <Button el="button" onClick={() => dispatch(setShowEmployeeForm())}>
+        <div className="flex gap-4">
+          <Button el="button" onClick={() => navigate(-1)}>
+            Ana Panele Dön
+          </Button>
+          <Button
+            el="button"
+            onClick={() => {
+              dispatch(setShowEmployeeForm()), dispatch(setEditMode(false));
+            }}
+          >
             Personel Ekle
           </Button>
         </div>
       </div>
       <EmployeeTable />
-      {showEmployeeForm && (
-        <div className="animate-fade-in absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform rounded-lg border border-slate-300 p-5 backdrop-blur-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Personel Ekle</h2>
-
-            <Button
-              el="icon-button"
-              title="Kapat"
-              onClick={() => dispatch(setShowEmployeeForm())}
-            >
-              <IoMdCloseCircleOutline />
-            </Button>
-          </div>
-          <AddEmployeeForm />
-        </div>
-      )}
+      {showEmployeeForm && <AddEmployeeForm />}
+      {showEmployeeDetails && <EmployeeDetailsCard />}
     </main>
   );
 }

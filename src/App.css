@@ -29,9 +29,7 @@ body {
 #appointment-image {
   animation: fadeIn 1.5s ease-out;
 }
-#auth-section {
-  animation: fadeIn 1.5s ease-out;
-}
+
 .animate-slide {
   animation: horizontalTranslate 0.5s;
 }

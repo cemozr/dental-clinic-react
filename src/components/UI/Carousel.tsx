@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import TreatmentCard from "./TreatmentCard";
 import SpecialistCard from "./SpecialistCard";
-
+import { type Employee } from "../../states/employeeSlice";
 type CarouselProps = {
   data: { imgsrc: string; header: string; description: string }[];
 };
@@ -14,7 +14,8 @@ type TreatmentCarouselProps = {
 
 type SpecialistCarouselProps = {
   type: "specialist-carousel";
-} & CarouselProps;
+  data: Employee[];
+};
 
 export default function Carousel(
   props: TreatmentCarouselProps | SpecialistCarouselProps,
@@ -80,13 +81,13 @@ export default function Carousel(
     return (
       <div className="slider-container">
         <Slider {...settings}>
-          {props.data.map((d, i) => {
+          {props.data.map((d) => {
             return (
               <SpecialistCard
-                key={i}
-                imgsrc={d.imgsrc}
-                header={d.header}
-                description={d.description}
+                key={d.id}
+                imgsrc={d.photo}
+                header={d.name}
+                description={d.title}
               />
             );
           })}

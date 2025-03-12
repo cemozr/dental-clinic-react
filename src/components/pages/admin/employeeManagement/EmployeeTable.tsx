@@ -5,7 +5,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../states/store";
 import {
+  deleteEmployee,
   getEmployees,
+  setEditMode,
+  setShowEmployeeDetails,
+  setShowEmployeeForm,
   updateEmployeeStatus,
 } from "../../../../states/employeeSlice";
 import Loading from "../../../UI/Loading";
@@ -83,12 +87,13 @@ export default function EmployeeTable() {
                     id="status"
                     defaultValue={employeeData.status}
                     className={`rounded-md ${employeeData.status === "Aktif" ? "bg-success" : "bg-error"} p-1 text-secondary hover:cursor-pointer`}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       updateEmployeeStatus(
                         employeeData.id,
                         e.currentTarget.value,
-                      )
-                    }
+                      ),
+                        dispatch(getEmployees());
+                    }}
                   >
                     <option
                       value="Aktif"
@@ -105,13 +110,32 @@ export default function EmployeeTable() {
                   </select>
                 </td>
                 <td className="flex justify-center gap-4 px-5 py-5 md:px-0">
-                  <Button el="icon-button" title="Randevu Detayı">
+                  <Button
+                    el="icon-button"
+                    title="Randevu Detayı"
+                    onClick={() =>
+                      dispatch(setShowEmployeeDetails(employeeData))
+                    }
+                  >
                     <MdInfo />
                   </Button>
-                  <Button el="icon-button" title="Düzenle">
+                  <Button
+                    el="icon-button"
+                    title="Düzenle"
+                    onClick={() => {
+                      dispatch(setEditMode(employeeData)),
+                        dispatch(setShowEmployeeForm());
+                    }}
+                  >
                     <MdSettings />
                   </Button>
-                  <Button title="Sil" el="icon-button">
+                  <Button
+                    title="Sil"
+                    el="icon-button"
+                    onClick={() => {
+                      deleteEmployee(employeeData.id), dispatch(getEmployees());
+                    }}
+                  >
                     <MdDelete />
                   </Button>
                 </td>

@@ -16,6 +16,7 @@ export default function SpecialistCard({
         src={imgsrc}
         alt={header + "photo"}
       />
+
       <article className="absolute bottom-2 left-2 rounded-md bg-gradient-to-r from-custom-sky-blue to-custom-light-blue px-4 py-1 lg:py-2">
         <h2 className="text-xl font-bold lg:text-2xl">{header}</h2>
         <p className="text-lg lg:text-xl">{description}</p>
