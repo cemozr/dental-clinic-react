@@ -13,7 +13,14 @@ import {
   FieldErrors,
 } from "react-hook-form";
 import { type AppointmentForm } from "../AppointmentForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../states/store";
+import { getEmployees } from "../../../../../states/employeeSlice";
+import {
+  handleAppointmentHours,
+  setSelectedSpecialist,
+} from "../../../../../states/appointmentSlice";
 
 type AppointmentInfoProps = {
   register: UseFormRegister<AppointmentForm>;
@@ -29,29 +36,21 @@ export default function AppointmentInfo({
   errors,
 }: AppointmentInfoProps) {
   registerLocale("tr", tr);
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, []);
 
   const isWeekday = (date: Date) => date.getDay() !== 0;
+  const { employees } = useSelector(
+    (state: RootState) => state.employeeReducer,
+  );
+  const { availableHours, selectedSpecialist } = useSelector(
+    (state: RootState) => state.appointmentReducer,
+  );
+  const specialists = employees.filter((emp) => emp.type === "Hekim");
 
-  const workingHours: string[] = [
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-  ];
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const handleTimeSelect = (
     time: string,
@@ -72,11 +71,14 @@ export default function AppointmentInfo({
           id="specialist"
           className="h-12 w-full appearance-none rounded-md text-center font-semibold"
           {...register("specialist")}
+          onChange={(e) =>
+            dispatch(setSelectedSpecialist(e.currentTarget.value))
+          }
         >
-          {specialists.specialists.map((specialist, i) => {
+          {specialists.map((specialist) => {
             return (
-              <option key={i} value={specialist.header}>
-                {specialist.header}
+              <option key={specialist.id} value={specialist.name}>
+                {`${specialist.name} (${specialist.title})`}
               </option>
             );
           })}
@@ -103,7 +105,16 @@ export default function AppointmentInfo({
             placeholderText="gg/aa/yyyy"
             locale="tr"
             selected={field.value}
-            onChange={(date) => field.onChange(date)}
+            onChange={(date) => {
+              field.onChange(date),
+                dispatch(
+                  handleAppointmentHours({
+                    selectedDate: date!,
+                    selectedDentist: selectedSpecialist!,
+                  }),
+                );
+              console.log("raw date: ", date);
+            }}
           />
         )}
       />
@@ -112,7 +123,7 @@ export default function AppointmentInfo({
       )}
       <p className="font-semibold">Randevu Saati</p>
       <ul className="grid grid-cols-5 gap-4 md:grid-cols-10 lg:grid-cols-6 xl:grid-cols-10">
-        {workingHours.map((hour) => {
+        {availableHours.map((hour) => {
           return (
             <li key={hour}>
               <Button

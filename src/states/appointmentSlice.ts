@@ -4,7 +4,10 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { toast, Zoom } from "react-toastify";
@@ -36,7 +39,30 @@ type InitialState = {
   showDetails: boolean;
   selectedAppointment: Appointment | null;
   editMode: boolean;
+  selectedSpecialist: string | null;
+  availableHours: string[];
 };
+
+const workingHours: string[] = [
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+];
 
 const initialState: InitialState = {
   appointments: [
@@ -65,6 +91,8 @@ const initialState: InitialState = {
   showDetails: false,
   selectedAppointment: null,
   editMode: false,
+  selectedSpecialist: null,
+  availableHours: [],
 };
 
 export const createAppointment = createAsyncThunk(
@@ -131,6 +159,36 @@ export const editAppointment = createAsyncThunk(
   },
 );
 
+export const handleAppointmentHours = createAsyncThunk(
+  "appointment/handleAppointmentHours",
+  async (data: { selectedDate: Date; selectedDentist: string }) => {
+    try {
+      const localDate = new Date(data.selectedDate);
+      localDate.setMinutes(
+        localDate.getMinutes() - localDate.getTimezoneOffset(),
+      );
+      const fixedDate: string = localDate.toISOString().split("T")[0];
+
+      const q = query(
+        collection(db, "appointments"),
+        where("specialist", "==", data.selectedDentist),
+        where("appointmentDate", "==", fixedDate),
+      );
+      const querySnapshot = await getDocs(q);
+      const bookedHours: string[] = querySnapshot.docs.map(
+        (doc) => doc.data().appointmentTime,
+      );
+      const filteredHours = workingHours.filter(
+        (hour) => !bookedHours.includes(hour),
+      );
+      return filteredHours;
+    } catch (err) {
+      console.error("getting hours failed", err);
+      return [];
+    }
+  },
+);
+
 const appointmentSlice = createSlice({
   name: "appointment",
   initialState,
@@ -149,6 +207,9 @@ const appointmentSlice = createSlice({
       if (state.editMode === true) {
         state.selectedAppointment = action.payload;
       } else state.selectedAppointment = null;
+    },
+    setSelectedSpecialist: (state, action: PayloadAction<string>) => {
+      state.selectedSpecialist = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -218,11 +279,25 @@ const appointmentSlice = createSlice({
           theme: "light",
           transition: Zoom,
         });
+      })
+      .addCase(handleAppointmentHours.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(handleAppointmentHours.fulfilled, (state, action) => {
+        state.availableHours = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(handleAppointmentHours.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
 
 export default appointmentSlice.reducer;
 
-export const { setAppointments, setShowDetails, setEditMode } =
-  appointmentSlice.actions;
+export const {
+  setAppointments,
+  setShowDetails,
+  setEditMode,
+  setSelectedSpecialist,
+} = appointmentSlice.actions;

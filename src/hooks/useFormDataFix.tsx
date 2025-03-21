@@ -3,12 +3,21 @@ import { type AppointmentForm } from "../components/pages/appointment/appointmen
 import { type Appointment } from "../states/appointmentSlice";
 
 export default function useFormDataFix(data: AppointmentForm) {
-  const formattedAppointmentDate: string = data
-    .appointmentDate!.toISOString()
+  const localAppointmentDate = new Date(data.appointmentDate!);
+  localAppointmentDate.setMinutes(
+    localAppointmentDate.getMinutes() -
+      localAppointmentDate.getTimezoneOffset(),
+  );
+
+  const formattedAppointmentDate: string = localAppointmentDate
+    .toISOString()
     .split("T")[0];
-  const formattedBirthDate: string = data
-    .birthDate!.toISOString()
-    .split("T")[0];
+
+  const localBirthDate = new Date(data.birthDate!);
+  localBirthDate.setMinutes(
+    localBirthDate.getMinutes() - localBirthDate.getTimezoneOffset(),
+  );
+  const formattedBirthDate: string = localBirthDate.toISOString().split("T")[0];
 
   const fixedData: Appointment = {
     appointmentDate: formattedAppointmentDate,

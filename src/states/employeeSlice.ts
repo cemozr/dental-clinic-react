@@ -25,6 +25,7 @@ export type Employee = {
 
 type InitialState = {
   employees: Employee[];
+
   isLoading: boolean;
   showEmployeeForm: boolean;
   editMode: boolean;
@@ -45,6 +46,7 @@ const initialState: InitialState = {
       type: "",
     },
   ],
+
   isLoading: false,
   showEmployeeForm: false,
   editMode: false,

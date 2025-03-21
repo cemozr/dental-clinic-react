@@ -13,7 +13,7 @@ export default function Specialists() {
     dispatch(getEmployees());
   }, []);
   const dentists = employees.filter((emp) => emp.type === "Hekim");
-  console.log(dentists);
+
   return (
     <>
       <article className="mt-10 flex flex-col items-center gap-4">

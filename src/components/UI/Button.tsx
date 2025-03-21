@@ -96,7 +96,7 @@ export default function Button(
       return (
         <button
           {...rest}
-          className={`${props.isSelected ? "bg-secondary text-custom-mid-blue" : "bg-custom-mid-blue text-secondary"} h-8 w-14 rounded-full font-semibold`}
+          className={`${props.isSelected ? "bg-secondary text-custom-mid-blue" : "bg-custom-mid-blue text-secondary hover:bg-blue-600"} h-8 w-14 rounded-full font-semibold`}
         ></button>
       );
     case "icon-button":
