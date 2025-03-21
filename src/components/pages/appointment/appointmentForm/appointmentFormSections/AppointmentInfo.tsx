@@ -1,4 +1,3 @@
-import specialists from "../../../../../data/specialists.json";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
